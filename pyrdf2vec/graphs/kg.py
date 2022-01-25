@@ -117,6 +117,13 @@ class KG:
         init=False, default=None, type=SPARQLConnector, repr=False
     )
 
+    query_string = attr.ib(
+        kw_only=True,
+        type=Optional[str],
+        default='/query?query=',
+        validator=attr.validators.optional(attr.validators.instance_of(str)),
+    )
+
     _is_remote = attr.ib(
         default=False, type=bool, validator=attr.validators.instance_of(bool)
     )
@@ -149,7 +156,7 @@ class KG:
 
             if self._is_remote is True:
                 self.connector = SPARQLConnector(
-                    self.location, cache=self.cache
+                    self.location, cache=self.cache, query_string=self.query_string
                 )
             elif self.location is not None:
                 for subj, pred, obj in rdflib.Graph().parse(
