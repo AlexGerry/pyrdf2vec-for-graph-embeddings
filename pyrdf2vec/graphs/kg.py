@@ -215,7 +215,7 @@ class KG:
             otherwise.
 
         """
-        if pred.name not in self.skip_predicates:
+        if pred.name in self.skip_predicates:
             self.add_vertex(subj)
             self.add_vertex(pred)
             self.add_vertex(obj)
