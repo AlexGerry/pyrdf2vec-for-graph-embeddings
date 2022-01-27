@@ -521,6 +521,10 @@ class KG:
                 vprev=vertex,
                 vnext=obj,
             )
-            if pred.name in self.take_predicates:
+            is_empty_take = (len(self.take_predicates) == 0)
+            is_empty_skip = (len(self.skip_predicates) == 0)
+            if (is_empty_take == 0) and (is_empty_skip != 0) and pred.name not in self.skip_predicates:
+                hops.append((pred, obj))
+            elif is_empty_take != 0 and pred.name in self.take_predicates:
                 hops.append((pred, obj))
         return hops
