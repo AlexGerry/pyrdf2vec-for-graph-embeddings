@@ -267,8 +267,7 @@ class KG:
         elif vertex.name.startswith("http://") or vertex.name.startswith(
             "https://"
         ):
-            res = self.connector.fetch(self.connector.get_query(vertex.name,
-                                                                list(self.take_predicates)))
+            res = self.connector.fetch(self.connector.get_query(vertex.name))
             hops = self._res2hops(vertex, res["results"]["bindings"])
         return hops
 
@@ -522,6 +521,6 @@ class KG:
                 vprev=vertex,
                 vnext=obj,
             )
-            if pred.name not in self.skip_predicates:
+            if pred.name in self.take_predicates:
                 hops.append((pred, obj))
         return hops
