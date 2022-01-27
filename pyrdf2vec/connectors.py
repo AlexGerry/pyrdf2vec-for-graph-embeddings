@@ -159,7 +159,9 @@ class SPARQLConnector(Connector):
             query = f"SELECT ?o WHERE {{ <{entity}> <{preds[0]}> "
             for i in range(1, len(preds)):
                 query += f"?o{i} . ?o{i} <{preds[i]}> "
-        query += "?o . }"
+        query += "?o . "
+        query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), ""wikidata.org/entity"")) } "
+        query += "}"
         return query
 
     def res2literals(self, res) -> Union[Literal, Tuple[Literal, ...]]:
