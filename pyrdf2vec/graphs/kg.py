@@ -268,7 +268,7 @@ class KG:
             "https://"
         ):
             res = self.connector.fetch(self.connector.get_query(vertex.name,
-                                                                self.take_predicates))
+                                                                list(self.take_predicates)))
             hops = self._res2hops(vertex, res["results"]["bindings"])
         return hops
 
