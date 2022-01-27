@@ -217,10 +217,10 @@ class KG:
         """
         if pred.name in self.skip_predicates:
             self.add_vertex(subj)
-            self.add_vertex(pred)
+            #self.add_vertex(pred)
             self.add_vertex(obj)
-            self.add_edge(subj, pred)
-            self.add_edge(pred, obj)
+            #self.add_edge(subj, pred)
+            #self.add_edge(pred, obj)
             return True
         return False
 
