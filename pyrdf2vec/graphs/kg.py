@@ -78,7 +78,6 @@ class KG:
         ),
     )
 
-    # added
     take_predicates = attr.ib(
         factory=set,
         type=Set[str],
