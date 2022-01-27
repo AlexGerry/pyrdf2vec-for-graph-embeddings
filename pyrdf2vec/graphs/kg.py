@@ -267,7 +267,8 @@ class KG:
         elif vertex.name.startswith("http://") or vertex.name.startswith(
             "https://"
         ):
-            res = self.connector.fetch(self.connector.get_query(vertex.name))
+            res = self.connector.fetch(self.connector.get_query(vertex.name,
+                                                                self.take_predicates))
             hops = self._res2hops(vertex, res["results"]["bindings"])
         return hops
 
