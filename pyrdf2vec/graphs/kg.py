@@ -70,6 +70,15 @@ class KG:
         ],
     )
 
+    skip_predicates = attr.ib(
+        factory=set,
+        type=Set[str],
+        validator=attr.validators.deep_iterable(
+            member_validator=attr.validators.instance_of(str)
+        ),
+    )
+
+    # added
     take_predicates = attr.ib(
         factory=set,
         type=Set[str],
