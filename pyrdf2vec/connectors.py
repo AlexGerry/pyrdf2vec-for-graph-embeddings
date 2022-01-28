@@ -160,7 +160,7 @@ class SPARQLConnector(Connector):
             for i in range(1, len(preds)):
                 query += f"?o{i} . ?o{i} <{preds[i]}> "
         query += "?o . "
-        query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), ""wikidata.org/entity"")) } "
+        query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), \"wikidata.org/entity\")) } "
         query += "}"
         return query
 

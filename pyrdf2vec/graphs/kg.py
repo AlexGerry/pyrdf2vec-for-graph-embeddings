@@ -42,7 +42,7 @@ class KG:
             It should be used only if the format can not be determined from
             source.
             Defaults to None.
-        literals: The predicate chains to get the literals.
+        c: The predicate chains to get the literals.
             Defaults to [].
         location: The location of the file to load.
             Defaults to None.
@@ -523,7 +523,8 @@ class KG:
             )
             is_empty_take = (len(self.take_predicates) == 0)
             is_empty_skip = (len(self.skip_predicates) == 0)
-            if (is_empty_take == 0) and (is_empty_skip != 0) and pred.name not in self.skip_predicates:
+            if (is_empty_take == 0) and (is_empty_skip != 0) \
+            and pred.name not in self.skip_predicates:
                 hops.append((pred, obj))
             elif is_empty_take != 0 and pred.name in self.take_predicates:
                 hops.append((pred, obj))
