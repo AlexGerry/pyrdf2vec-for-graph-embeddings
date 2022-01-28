@@ -308,7 +308,7 @@ class KG:
 
         if self._is_remote:
             queries = [
-                self.connector.get_query(entity, pchain)
+                self.connector.get_query(entity, pchain, verbose)
                 for entity in tqdm(
                     entities, disable=True if verbose == 0 else False
                 )

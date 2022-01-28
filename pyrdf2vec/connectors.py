@@ -9,6 +9,7 @@ import aiohttp
 import attr
 import numpy as np
 import requests
+import sys
 from cachetools import Cache, TTLCache, cachedmethod
 from cachetools.keys import hashkey
 
@@ -142,7 +143,7 @@ class SPARQLConnector(Connector):
         with requests.get(url, headers=self._headers) as res:
             return res.json()
 
-    def get_query(self, entity: str, preds: Optional[List[str]] = None) -> str:
+    def get_query(self, entity: str, preds: Optional[List[str]] = None, verbose: int = 0) -> str:
         """Gets the SPARQL query for an entity.
 
         Args:
@@ -160,8 +161,12 @@ class SPARQLConnector(Connector):
             for i in range(1, len(preds)):
                 query += f"?o{i} . ?o{i} <{preds[i]}> "
         query += "?o . "
-        query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), \"wikidata.org/entity\")) } "
+        query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), ""wikidata.org/entity"")) } "
         query += "}"
+        if verbose == 2:
+            sys.stdout.flush()
+            print(query)
+            sys.stdout.flush()
         return query
 
     def res2literals(self, res) -> Union[Literal, Tuple[Literal, ...]]:

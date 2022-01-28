@@ -1,5 +1,6 @@
 from hashlib import md5
 from typing import List, Optional, Set
+from tqdm import tqdm
 
 import attr
 
@@ -134,8 +135,8 @@ class RandomWalker(Walker):
         if self.with_reverse:
             return [
                 r_walk[:-1] + walk
-                for walk in fct_search(kg, entity)
-                for r_walk in fct_search(kg, entity, is_reverse=True)
+                for i, walk in tqdm(enumerate(fct_search(kg, entity)), desc=f"Right walks: ", total=self.max_walks)
+                for r_walk in tqdm(fct_search(kg, entity, is_reverse=True), desc=f"{i}th left walk: ", total=self.max_walks)
             ]
         return [walk for walk in fct_search(kg, entity)]
 
