@@ -140,6 +140,7 @@ class SPARQLConnector(Connector):
 
         """
         url = f"{self.endpoint}{self.query_string}{parse.quote(query)}"
+        print(url)
         with requests.get(url, headers=self._headers) as res:
             return res.json()
 
@@ -168,7 +169,6 @@ class SPARQLConnector(Connector):
             query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), \"wikidata.org/entity\")) } "
         
         query += "}"
-        print(query)
         return query
 
     def res2literals(self, res) -> Union[Literal, Tuple[Literal, ...]]:
