@@ -163,11 +163,12 @@ class SPARQLConnector(Connector):
         query += "?o . "
 
         if 'www.wikidata.org' in entity:
-            query += "FILTER(CONTAINS(STR(?o), \"wikidata.org/entity/Q\"))"    
+            query += "FILTER(CONTAINS(STR(?o), \"wikidata.org/entity/Q\")) "    
         else:
             query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), \"wikidata.org/entity\")) } "
         
         query += "}"
+        print(query)
         return query
 
     def res2literals(self, res) -> Union[Literal, Tuple[Literal, ...]]:
