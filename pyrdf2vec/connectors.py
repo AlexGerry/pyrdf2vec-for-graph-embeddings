@@ -124,7 +124,10 @@ class SPARQLConnector(Connector):
             The response of the query in a JSON format.
 
         """
-        url = f"{self.endpoint}{self.query_string}{parse.quote(query)}"
+        if self.endpoint == 'https://query.wikidata.org/sparql':
+            url = f"{self.endpoint}?format=json&{self.query_string}={parse.quote(query)}"
+        else:
+            url = f"{self.endpoint}{self.query_string}{parse.quote(query)}"
         async with self._asession.get(url, headers=self._headers) as res:
             return await res.json()
 
