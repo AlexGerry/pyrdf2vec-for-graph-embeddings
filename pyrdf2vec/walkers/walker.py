@@ -152,11 +152,7 @@ class Walker(ABC):
             kg._fill_hops(entities)
 
         with multiprocessing.Pool(process, self._init_worker, [kg]) as pool:
-            res = list(
-                pool.imap(self._proc, entities),
-                total=len(entities),
-                disable=True if verbose == 0 else False,
-            )
+            res = list(pool.imap(self._proc, entities))
         return self._post_extract(res)
 
     @abstractmethod
