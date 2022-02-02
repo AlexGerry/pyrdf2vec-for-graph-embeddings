@@ -139,8 +139,10 @@ class SPARQLConnector(Connector):
             The response of the query in a JSON format.
 
         """
-        url = f"{self.endpoint}{self.query_string}{parse.quote(query)}"
-        print(url)
+        if self.endpoint == 'https://query.wikidata.org/sparql':
+            url = f"{self.endpoint}?format=json&{self.query_string}={parse.quote(query)}"
+        else:
+            url = f"{self.endpoint}{self.query_string}{parse.quote(query)}"
         with requests.get(url, headers=self._headers) as res:
             return res.json()
 
