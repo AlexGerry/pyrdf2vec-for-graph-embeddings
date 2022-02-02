@@ -161,12 +161,13 @@ class SPARQLConnector(Connector):
             for i in range(1, len(preds)):
                 query += f"?o{i} . ?o{i} <{preds[i]}> "
         query += "?o . "
-        query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), \"wikidata.org/entity\")) } "
+
+        if 'www.wikidata.org' in entity:
+            query += "FILTER(CONTAINS(STR(?o), \"wikidata.org/entity/Q\"))"    
+        else:
+            query += "FILTER EXISTS { ?o owl:sameAs ?WikidataEntity . FILTER(CONTAINS(STR(?WikidataEntity), \"wikidata.org/entity\")) } "
+        
         query += "}"
-        if verbose == 2:
-            sys.stdout.flush()
-            print(query)
-            sys.stdout.flush()
         return query
 
     def res2literals(self, res) -> Union[Literal, Tuple[Literal, ...]]:
