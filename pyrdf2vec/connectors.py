@@ -147,6 +147,7 @@ class SPARQLConnector(Connector):
         else:
             url = f"{self.endpoint}{self.query_string}{parse.quote(query)}"
         with requests.get(url, headers=self._headers) as res:
+            print(f"{res.status_code} - {url}")
             return res.json()
 
     def get_query(self, entity: str, preds: Optional[List[str]] = None, verbose: int = 0) -> str:
