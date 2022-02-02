@@ -78,14 +78,6 @@ class KG:
         ),
     )
 
-    take_predicates = attr.ib(
-        factory=set,
-        type=Set[str],
-        validator=attr.validators.deep_iterable(
-            member_validator=attr.validators.instance_of(str)
-        ),
-    )
-
     literals = attr.ib(  # type: ignore
         factory=list,
         type=List[List[str]],
@@ -224,27 +216,13 @@ class KG:
             otherwise.
 
         """
-        is_empty_take = (len(self.take_predicates) == 0)
-        is_empty_skip = (len(self.skip_predicates) == 0)
-        if (is_empty_take == 0) and (is_empty_skip != 0):
-            if pred.name not in self.skip_predicates:
-                self.add_vertex(subj)
-                self.add_vertex(pred)
-                self.add_vertex(obj)
-                self.add_edge(subj, pred)
-                self.add_edge(pred, obj)
-                return True
-            else:
-                return False
-        elif is_empty_take != 0:
-            if pred.name in self.take_predicates:
-                self.add_vertex(subj)
-                self.add_vertex(pred)
-                self.add_vertex(obj)
-                self.add_edge(subj, pred)
-                self.add_edge(pred, obj)
-                return True
-            return False
+        if pred.name not in self.skip_predicates:
+            self.add_vertex(subj)
+            self.add_vertex(pred)
+            self.add_vertex(obj)
+            self.add_edge(subj, pred)
+            self.add_edge(pred, obj)
+            return True
         return False
 
 
@@ -521,11 +499,7 @@ class KG:
                 vprev=vertex,
                 vnext=obj,
             )
-            is_empty_take = (len(self.take_predicates) == 0)
-            is_empty_skip = (len(self.skip_predicates) == 0)
-            if (is_empty_take == 0) and (is_empty_skip != 0) \
-            and pred.name not in self.skip_predicates:
-                hops.append((pred, obj))
-            elif is_empty_take != 0 and pred.name in self.take_predicates:
+            if pred.name not in self.skip_predicates:
                 hops.append((pred, obj))
         return hops
+
