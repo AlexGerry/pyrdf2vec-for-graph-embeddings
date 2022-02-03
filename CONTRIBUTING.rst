@@ -157,7 +157,7 @@ Before contributing, it is important that you can install the pyRDF2Vec
 dependencies in your environment. Whether you are using a Notebook or directly
 your text editor, here is the preferred method:
 
-1. **Install `poetry <https://python-poetry.org/>`__**:
+Install `poetry <https://python-poetry.org/>`__:
 
 .. code:: bash
 
@@ -175,6 +175,15 @@ Now all you have to do is spawn a terminal to your virtual environment:
 .. code:: bash
 
    poetry shell
+
+If you prefer, you could contribute directly to ``pyRDF2Vec`` with the Docker
+image and avoid installing dependencies on your machine:
+
+.. code:: bash
+
+   docker-compose up --build -d
+
+Now you only have to go to `localhost:9000 <http://localhost:9000>`__.
 
 Add a New Embedding Technique
 -----------------------------
