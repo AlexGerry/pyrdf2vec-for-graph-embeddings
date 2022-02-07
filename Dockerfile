@@ -16,9 +16,10 @@ WORKDIR /home/jovyan/work
 
 # Cache the requirements and reinstall them only when a change occurs in the
 # pyproject.toml files
-COPY poetry.lock pyproject.toml /home/jovyan/work/
+COPY poetry.lock poetry.lock
+COPY pyproject.toml pyproject.toml
 
 RUN poetry config virtualenvs.create false \
     && poetry install --
 
-COPY . /code
+EXPOSE 5000
