@@ -2,6 +2,7 @@ import asyncio
 import operator
 from abc import ABC, abstractmethod
 from functools import partial
+from tracemalloc import stop
 from typing import Dict, List, Optional, Tuple, Union
 from urllib import parse
 
@@ -142,13 +143,19 @@ class SPARQLConnector(Connector):
             The response of the query in a JSON format.
 
         """
+        
         if self.endpoint == 'https://query.wikidata.org/sparql':
             url = f"{self.endpoint}?format=json&{self.query_string}={parse.quote(query)}"
         else:
             url = f"{self.endpoint}{self.query_string}{parse.quote(query)}"
-        with requests.get(url, headers=self._headers) as res:
-            # print(f"{res.status_code} - {url}")
-            return res.json()
+        
+        try:
+            with requests.get(url, headers = {'User-agent': 'gerry/1.0 (a.gherardi9@campus.unimib.it) pyrdf2vec/1.0'}) as res:
+                return res.json()
+        except:
+            with requests.get(url, headers = {'User-agent': 'gerry/1.0 (a.gherardi9@campus.unimib.it) pyrdf2vec/1.0'}) as res:
+                print(res.status_code)
+                print(res.headers)
 
     def get_query(self, entity: str, preds: Optional[List[str]] = None, verbose: int = 0) -> str:
         """Gets the SPARQL query for an entity.
